@@ -11,9 +11,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="relative min-h-screen flex flex-col" 
-         style="background-image: url('{{ asset('Fondo 1.png') }}'); 
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+
+    <div class="relative flex flex-col flex-grow" 
+         style="background-image: url('Fondo 1.png'); 
                 background-size: auto;
                 background-repeat: repeat;
                 background-position: center;">
@@ -41,9 +42,9 @@
             </div>
         </nav>
 
-        <div class="relative z-10 flex flex-grow">
-            <aside class="w-1/5 bg-gray-800 p-6">
-                <h2 class="text-lg font-bold mb-4">Filtros</h2>
+        <div class="relative z-10 flex flex-grow p-6 space-x-6">
+            <aside class="w-64 bg-gray-800 p-6 rounded-lg shadow-lg hidden lg:block">
+                <h2 class="text-lg font-bold mb-4 text-white">Filtros</h2>
                 
                 <div class="mb-4">
                     <h3 class="font-semibold mb-2">Categoría</h3>
@@ -52,40 +53,90 @@
                         <li><input type="checkbox"> Deportes</li>
                         <li><input type="checkbox"> Entretenimiento</li>
                     </ul>
+
+                    <h3 class="font-semibold mb-2">Precios</h3>
+                    <ul class="space-y-2">
+                        <li><input type="checkbox" checked> Menos de $199</li>
+                        <li><input type="checkbox"> $200 a $500</li>
+                        <li><input type="checkbox"> $500 a $999</li>
+                        <li><input type="checkbox"> Más de $1,000</li>
+                    </ul>
+
+                    <h3 class="font-semibold mb-2">Año</h3>
+                    <ul class="space-y-2">
+                        <li><input type="checkbox"> 2019 y más</li>
+                        <li><input type="checkbox" checked> 2020</li>
+                        <li><input type="checkbox"> 2021</li>
+                        <li><input type="checkbox"> 2022</li>
+                        <li><input type="checkbox"> 2023</li>
+                        <li><input type="checkbox"> 2024</li>
+                        <li><input type="checkbox"> 2025</li>
+                    </ul>
+
+                    <h3 class="font-semibold mb-2">Frecuencia</h3>
+                    <ul class="space-y-2">
+                        <li><input type="checkbox"checked> 10</li>
+                        <li><input type="checkbox"> 15</li>
+                        <li><input type="checkbox"> 20</li>
+                        <li><input type="checkbox"> 50</li>
+                        <li><input type="checkbox"> 100</li>
+                        <li><input type="checkbox"> 150</li>
+                        <li><input type="checkbox"> 200</li>
+                    </ul>
                 </div>
             </aside>
 
-            <main class="w-4/5 p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="bg-white text-black p-4 rounded shadow-lg">
-                    <img src="deadpool.jpg" alt="Deadpool Vol.05" class="w-full rounded mb-2">
-                    <h3 class="font-bold">Deadpool Vol.05</h3>
-                    <p class="text-gray-700">$299.00</p>
+            <main class="flex-grow grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                    <img src="Deadpool Vol.05.jpg" alt="Deadpool Vol.05" class="w-64 h-80 rounded mb-4 object-cover">
+                    <h3 class="font-bold text-lg">Deadpool Vol.05</h3>
+                    <p class="text-gray-700 text-lg">$299.00</p>
                     <span class="text-yellow-500 font-semibold">Pre-Venta</span>
                 </div>
 
-                <div class="bg-white text-black p-4 rounded shadow-lg">
-                    <img src="hulk.jpg" alt="Incredible Hulk Vol.01" class="w-full rounded mb-2">
-                    <h3 class="font-bold">Incredible Hulk Vol.01</h3>
-                    <p class="text-gray-700">$399.00</p>
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                    <img src="Incredible Hulk Vol.01.jpg" alt="Incredible Hulk Vol.01" class="w-64 h-80 rounded mb-4 object-cover">
+                    <h3 class="font-bold text-lg">Incredible Hulk Vol.01</h3>
+                    <p class="text-gray-700 text-lg">$399.00</p>
                     <span class="text-yellow-500 font-semibold">Pre-Venta</span>
                 </div>
 
-                <div class="bg-white text-black p-4 rounded shadow-lg">
-                    <img src="starwars.jpg" alt="Star Wars" class="w-full rounded mb-2">
-                    <h3 class="font-bold">Star Wars De Gillen & Pak</h3>
-                    <p class="text-gray-700">$1,533.00</p>
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                    <img src="Star Wars De Gillen & Pak.jpeg" alt="Star Wars" class="w-64 h-80 rounded mb-4 object-cover">
+                    <h3 class="font-bold text-lg">Star Wars De Gillen & Pak</h3>
+                    <p class="text-gray-700 text-lg">$1,533.00</p>
+                </div>
+
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                    <img src="The Amazing Spider-Man #25.jpeg" alt="The Amazing Spider-Man #25" class="w-64 h-80 rounded mb-4 object-cover">
+                    <h3 class="font-bold text-lg">The Amazing Spider-Man #25</h3>
+                    <p class="text-gray-700 text-lg">$79.00</p>
+                </div>
+
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                    <img src="Punisher De Mike Baron.jpeg" alt="Punisher De Mike Baron" class="w-64 h-80 rounded mb-4 object-cover">
+                    <h3 class="font-bold text-lg">Punisher De Mike Baron</h3>
+                    <p class="text-gray-700 text-lg">$579.00</p>
+                </div>
+
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                    <img src="Daredevil Vol.01.jpeg" alt="Daredevil Vol.01" class="w-64 h-80 rounded mb-4 object-cover">
+                    <h3 class="font-bold text-lg">Daredevil Vol.01</h3>
+                    <p class="text-gray-700 text-lg">$1,235.00</p>
+                    <span class="text-yellow-500 font-semibold">Pre-Venta</span>
                 </div>
             </main>
         </div>
-
-        <footer class="relative z-10 bg-black p-6 text-center">
-            <h2 class="font-bold text-white">Preventas Exclusivas</h2>
-            <ul class="text-gray-400 text-sm space-y-1">
-                <li>DC Comics</li>
-                <li>Marvel Comics</li>
-                <li>Panini Comics</li>
-            </ul>
-        </footer>
     </div>
+
+    <footer class="bg-black text-white py-6 mt-auto">
+        <div class="text-center">
+            <h3 class="font-bold text-lg">Preventas Exclusivas</h3>
+            <p>DC Comics</p>
+            <p>Marvel Comics</p>
+            <p>Panini Comics</p>
+        </div>
+    </footer>
+
 </body>
 </html>
