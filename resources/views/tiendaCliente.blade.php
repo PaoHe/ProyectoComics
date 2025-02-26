@@ -143,6 +143,5 @@
             <p>Panini Comics</p>
         </div>
     </footer>
-
 </body>
 </html>
