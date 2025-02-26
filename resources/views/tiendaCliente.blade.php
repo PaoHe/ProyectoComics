@@ -87,43 +87,49 @@
             </aside>
 
             <main class="flex-grow grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center" id="1">>
                     <img src="Deadpool Vol.05.jpg" alt="Deadpool Vol.05" class="w-64 h-80 rounded mb-4 object-cover">
                     <h3 class="font-bold text-lg">Deadpool Vol.05</h3>
                     <p class="text-gray-700 text-lg">$299.00</p>
                     <span class="text-yellow-500 font-semibold">Pre-Venta</span>
+                    <a href="{{ route('compraComic', ['id' => 1]) }}" class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded select-product">Ver más</a>
                 </div>
 
-                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center" id="2">
                     <img src="Incredible Hulk Vol.01.jpg" alt="Incredible Hulk Vol.01" class="w-64 h-80 rounded mb-4 object-cover">
                     <h3 class="font-bold text-lg">Incredible Hulk Vol.01</h3>
                     <p class="text-gray-700 text-lg">$399.00</p>
                     <span class="text-yellow-500 font-semibold">Pre-Venta</span>
+                    <a href="{{ route('compraComic', ['id' => 2]) }}" class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded select-product">Ver más</a>
                 </div>
 
-                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center" id="3">
                     <img src="Star Wars De Gillen & Pak.jpeg" alt="Star Wars" class="w-64 h-80 rounded mb-4 object-cover">
                     <h3 class="font-bold text-lg">Star Wars De Gillen & Pak</h3>
                     <p class="text-gray-700 text-lg">$1,533.00</p>
+                    <a href="{{ route('compraComic', ['id' => 3]) }}" class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded select-product">Ver más</a>
                 </div>
-
-                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
-                    <img src="The Amazing Spider-Man #25.jpeg" alt="The Amazing Spider-Man #25" class="w-64 h-80 rounded mb-4 object-cover">
+                
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center" id="4">
+                    <img src="The Amazing Spider-Man.jpeg" alt="The Amazing Spider-Man #25" class="w-64 h-80 rounded mb-4 object-cover">
                     <h3 class="font-bold text-lg">The Amazing Spider-Man #25</h3>
                     <p class="text-gray-700 text-lg">$79.00</p>
+                    <a href="{{ route('compraComic', ['id' => 4]) }}" class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded select-product">Ver más</a>
                 </div>
 
-                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center" id="5">
                     <img src="Punisher De Mike Baron.jpeg" alt="Punisher De Mike Baron" class="w-64 h-80 rounded mb-4 object-cover">
                     <h3 class="font-bold text-lg">Punisher De Mike Baron</h3>
                     <p class="text-gray-700 text-lg">$579.00</p>
+                    <a href="{{ route('compraComic', ['id' => 5]) }}" class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded select-product">Ver más</a>
                 </div>
 
-                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center">
+                <div class="bg-white text-black p-6 rounded-lg shadow-lg flex flex-col items-center" id="6">
                     <img src="Daredevil Vol.01.jpeg" alt="Daredevil Vol.01" class="w-64 h-80 rounded mb-4 object-cover">
                     <h3 class="font-bold text-lg">Daredevil Vol.01</h3>
                     <p class="text-gray-700 text-lg">$1,235.00</p>
                     <span class="text-yellow-500 font-semibold">Pre-Venta</span>
+                    <a href="{{ route('compraComic', ['id' => 6]) }}" class="mt-4 bg-yellow-400 text-black px-4 py-2 rounded select-product">Ver más</a>
                 </div>
             </main>
         </div>
