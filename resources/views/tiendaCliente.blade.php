@@ -29,8 +29,8 @@
                 <a href="#" class="text-white hover:text-yellow-400">Pedidos</a>
                 <a href="#" class="text-white hover:text-yellow-400">Mis Compras</a>
                 <a href="#" class="text-white hover:text-yellow-400">Miembro</a>
-                <a href="#" class="text-white hover:text-yellow-400">Mi perfil</a>
-                
+                <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
+                                
                 <div class="relative">
                     <input type="text" placeholder="Buscar..." class="px-4 py-2 rounded text-black">
                     <button class="absolute right-2 top-2 text-white">
