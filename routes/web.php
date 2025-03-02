@@ -15,3 +15,7 @@ Route::get('/tiendaCliente', function () {
 Route::get('/compraComic/{id}', [ComicController::class, 'show'])->name('compraComic');
 
 Route::get('/mi-perfil', [MiPerfilController::class, 'index'])->name('miPerfil');
+
+Route::get('/membresia', function () {
+    return view('membresia');
+})->name('membresia');

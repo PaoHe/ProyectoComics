@@ -19,11 +19,11 @@
         <nav class="relative z-20 bg-black p-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-shadow">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
             <div class="flex items-center space-x-6">
-                <a href="#" class="text-white hover:text-yellow-400">Cómics</a>
+                <a href="{{ route('tiendaCliente') }}" class="text-white hover:text-yellow-400">Cómics</a>
                 <a href="#" class="text-white hover:text-yellow-400">Pedidos</a>
                 <a href="#" class="text-white hover:text-yellow-400">Mis Compras</a>
-                <a href="#" class="text-white hover:text-yellow-400">Miembro</a>
-                <a href="#" class="text-white hover:text-yellow-400">Mi perfil</a>
+                <a href="{{ route('membresia') }}" class="text-white hover:text-yellow-400">Mi Membresía</a>
+                <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
             </div>
         </nav>
 
