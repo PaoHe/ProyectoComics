@@ -31,7 +31,11 @@
         <div class="relative text-center">
             <h1 class="text-4xl font-bold text-shadow">Bienvenido</h1>
             <p class="text-lg text-shadow">Inicia Sesión</p>
-            
+
+            <div id="errorMessage" class="hidden bg-red-500 text-white p-4 rounded-lg shadow-lg mt-4 w-80 mx-auto">
+                Usuario o contraseña incorrectos.
+            </div>
+
             <div class="bg-white text-black p-6 rounded-lg shadow-lg mt-4 w-80">
                 <form id="loginForm">
                     <label class="block text-left">Usuario</label>
@@ -41,7 +45,7 @@
                     <a href="{{ route('register') }}" class="text-blue-500 text-sm block">¿No tienes sesión?</a>
                     <a href="#" class="text-blue-500 text-sm block">¿Olvidaste tu contraseña?</a>
                     <button type="submit" class="w-full bg-black text-white p-2 rounded mt-4">¡Vamos!</button>
-                    </form>
+                </form>
             </div>
         </div>
     </div>
@@ -66,6 +70,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const errorMessage = document.getElementById("errorMessage");
+
             document.getElementById("loginForm").addEventListener("submit", function (event) {
                 event.preventDefault(); 
 
@@ -76,10 +82,13 @@
                 const password = document.getElementById("password").value;
 
                 if (username === staticUser && password === staticPassword) {
-                    alert("Inicio de sesión exitoso");
                     window.location.href = "{{ route('tiendaCliente') }}"; 
                 } else {
-                    alert("Usuario o contraseña incorrectos");
+                  
+                    errorMessage.classList.remove("hidden");
+                    setTimeout(() => {
+                        errorMessage.classList.add("hidden");
+                    }, 3000); 
                 }
             });
         });

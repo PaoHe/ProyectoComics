@@ -44,10 +44,19 @@
             
             <div class="flex items-center space-x-6">
                 <a href="{{ route('tiendaCliente') }}" class="text-white hover:text-yellow-400">Cómics</a>
-                <a href="#" class="text-white hover:text-yellow-400">Pedidos</a>
-                <a href="#" class="text-white hover:text-yellow-400">Mis Compras</a>
+                <a href="{{ route('misPedidos') }}" class="text-white hover:text-yellow-400">Mis Pedidos</a>
+                <a href="{{ route(name: 'misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
                 <a href="{{ route('membresia') }}" class="text-yellow-400">Mi Membresía</a>
                 <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
+
+                <div class="relative">
+                    <input type="text" placeholder="Buscar..." class="px-4 py-2 rounded text-black">
+                    <button class="absolute right-2 top-2 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+                            <path d="M23 21l-6-6m2-6a9 9 0 1 0-9 9 9 9 0 0 0 9-9z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </nav>
 

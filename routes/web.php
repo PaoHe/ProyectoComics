@@ -19,3 +19,11 @@ Route::get('/mi-perfil', [MiPerfilController::class, 'index'])->name('miPerfil')
 Route::get('/membresia', function () {
     return view('membresia');
 })->name('membresia');
+
+Route::get('/mis-compras', function () {
+    return view('misCompras');
+})->name('misCompras');
+
+Route::get('/misPedidos', function () {
+    return view('misPedidos');
+})->name('misPedidos');

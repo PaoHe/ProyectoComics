@@ -18,7 +18,7 @@
             background-size: auto; 
             background-repeat: repeat; 
             background-position: center;">
-    
+
     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
 
     <nav class="relative z-10 bg-black p-4 flex justify-between items-center">
@@ -26,8 +26,8 @@
         
         <div class="flex items-center space-x-6">
             <a href="{{ route('tiendaCliente') }}" class="text-white hover:text-yellow-400">Cómics</a>
-            <a href="#" class="text-white hover:text-yellow-400">Pedidos</a>
-            <a href="#" class="text-white hover:text-yellow-400">Mis Compras</a>
+            <a href="{{ route('misPedidos') }}" class="text-white hover:text-yellow-400">Mis Pedidos</a>
+            <a href="{{ route('misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
             <a href="{{ route('membresia') }}" class="text-white hover:text-yellow-400">Mi Membresía</a>
             <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
             
@@ -104,10 +104,16 @@
                 </div>
 
                 <div class="flex justify-center self-center">
-                    <img src="imagenes/miperfil1.png" alt="miperfil" class="w-43 h-43 rounded-lg">
+                    <img src="imagenes/miperfil.jpg" alt="miperfil" class="w-203 h-203 rounded-lg">
                 </div>
             </div>
         </main>
+
+        <div class="mt-4 w-full flex justify-end">
+            <a href="{{ route('login') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-400">
+                Cerrar sesión
+            </a>
+        </div>
     </div>
 </div>
 

@@ -26,8 +26,8 @@
             
             <div class="flex items-center space-x-6">
                 <a href="{{ route('tiendaCliente') }}" class="text-white hover:text-yellow-400">Cómics</a>
-                <a href="#" class="text-white hover:text-yellow-400">Pedidos</a>
-                <a href="#" class="text-white hover:text-yellow-400">Mis Compras</a>
+                <a href="{{ route('misPedidos') }}" class="text-white hover:text-yellow-400">Mis Pedidos</a>
+                <a href="{{ route('misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
                 <a href="{{ route('membresia') }}" class="text-white hover:text-yellow-400">Mi Membresía</a>
                 <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
                                 
