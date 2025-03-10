@@ -15,7 +15,7 @@
     <nav class="bg-black p-4 flex justify-between items-center">
         <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
         <div>
-            <a href="{{ route('register') }}" class="bg-black border border-white px-4 py-2 rounded ml-2">Regístrate</a>
+            <a href="{{ route(name: 'register') }}" class="bg-black border border-white px-4 py-2 rounded ml-2">Regístrate</a>
             <a href="{{ route('loginAdmin') }}"><button class="bg-gray-300 text-black px-4 py-2 rounded">Administrador</button></a>        
         </div>
     </nav>

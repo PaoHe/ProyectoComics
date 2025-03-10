@@ -31,3 +31,32 @@ Route::get('/mis-compras', function () {
 Route::get('/misPedidos', function () {
     return view('misPedidos');
 })->name('misPedidos');
+
+
+
+
+Route::get('/todos-productos', function () {
+    return view('todosProductos');
+})->name('todosProductos');
+
+
+
+Route::get('/RegistroProductos', function () {
+    return view('productosRegistro');
+})->name('productosRegistro');
+
+Route::get('/Productos', function () {
+    return view('todosProductos');
+})->name('todosProductos');
+
+Route::get('/agregarComic', function () {
+    return view('comicsRegistro');
+})->name('comicsRegistro');
+
+Route::get('/agregarFigura', function () {
+    return view('figurasRegistro');
+})->name('figurasRegistro');
+
+Route::get('/Admin', function () {
+    return view('perfilAdmin');
+})->name('perfilAdmin');

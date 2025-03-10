@@ -44,8 +44,7 @@
                     <label class="block text-left">Contraseña</label>
                     <input type="password" id="password" class="w-full p-2 border rounded mb-3" placeholder="*****" required>
                     <a href="#" class="text-blue-500 text-sm block">¿Olvidaste tu contraseña?</a>
-                    <button type="submit" class="w-full bg-black text-white p-2 rounded mt-4">¡Iniciar Sesión!</button>
-                </form>
+                    <a href="{{ route('todosProductos') }}" class="w-full bg-black text-white p-2 rounded mt-4 text-center block">¡Iniciar Sesión!</a>                </form>
             </div>
         </div>
     </div>
