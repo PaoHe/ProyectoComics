@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ComicController extends Controller
 {
@@ -14,7 +15,7 @@ class ComicController extends Controller
             Sin embargo, la fama no viene sola, y ahora Deadpool debe lidiar con las responsabilidades que trae la popularidad. 
             Para ello, decide pedir ayuda, pero... nunca adivinarás a quién se la pidió. 
             Si eso no fuera suficiente, un impostor amenaza con destruir la reputación de Wade, y nuestro peculiar héroe tiene un plan maestro: 
-            ¡usar a su hija Ellie como cebo para atrapar al culpable! Y, además, por si eso fuera poco,',
+            ¡usar a su hija Ellie como cebo para atrapar al culpable! Y, además, por si eso no fuera poco,',
             'imagen' => 'Deadpool Vol.05.jpg',
         ],
         2 => [
@@ -50,7 +51,7 @@ class ComicController extends Controller
             'nombre' => 'Daredevil Vol.01',
             'precio' => '$1,235.00',
             'descripcion' => 'Es una nueva era para Nueva York y para el Hombre Sin Miedo. Matt Murdock no tiene más opción que dejar atrás todo lo que ha conocido, 
-            y Elektra es el último vestigio de su vida pasada. Todo lo que Matt creía saber sobre lo que significa ser Daredevil está a punto de cambiar. ',
+            y Elektra es el último vestigio de su vida pasada. Todo lo que Matt creía saber sobre lo que significa ser Daredevil está a punto de cambiar.',
             'imagen' => 'Daredevil Vol.01.jpeg',
         ]
     ];
@@ -62,6 +63,28 @@ class ComicController extends Controller
         }
 
         $producto = $this->productos[$id];
+        $producto['id'] = $id; 
         return view('compraComic', compact('producto'));
+    }
+
+    public function agregarAlCarrito(Request $request, $id)
+    {
+        $request->validate([
+            'cantidad' => 'required|integer|min:1',
+        ]);
+
+        if (!isset($this->productos[$id])) {
+            abort(404);
+        }
+
+        $producto = $this->productos[$id];
+        $producto['id'] = $id; 
+        $producto['cantidad'] = $request->cantidad;
+
+        $carrito = Session::get('carrito', []);
+        $carrito[$id] = $producto; 
+        Session::put('carrito', $carrito);
+
+        return redirect()->route('carrito')->with('success', 'Producto agregado al carrito');
     }
 }

@@ -9,7 +9,7 @@
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
     <div class="relative flex flex-col flex-grow" 
-         style="background-image:  url('{{ asset('Fondo 1.png') }}'); 
+         style="background-image: url('{{ asset('Fondo 1.png') }}'); 
                 background-size: auto;
                 background-repeat: repeat;
                 background-position: center;">
@@ -21,10 +21,15 @@
             <div class="flex items-center space-x-6">
                 <a href="{{ route('tiendaCliente') }}" class="text-white hover:text-yellow-400">Cómics</a>
                 <a href="{{ route('misPedidos') }}" class="text-white hover:text-yellow-400">Mis Pedidos</a>
-                <a href="{{ route(name: 'misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
+                <a href="{{ route('misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
                 <a href="{{ route('membresia') }}" class="text-yellow-400">Mi Membresía</a>
                 <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
-
+                <a href="{{ route('carrito') }}" class="text-white hover:text-yellow-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1.5 9H5.5L4 3z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4zm1-8h10M5 6h12" />
+                    </svg>
+                </a>
             </div>
         </nav>
 
@@ -36,27 +41,30 @@
                         <h1 class="text-3xl font-bold mb-4">{{ $producto['nombre'] }}</h1>
                         <p class="text-yellow-400 text-2xl font-semibold mb-4">{{ $producto['precio'] }}</p>
                         <p class="text-gray-300 mb-6">{{ $producto['descripcion'] }}</p>
-                        <div class="mb-4">
-                            <label for="cantidad" class="text-gray-300 text-lg block mb-2">Cantidad:</label>
-                            <input type="number" id="cantidad" name="cantidad" min="1" value="1" class="bg-gray-700 text-white text-lg px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" />
-                        </div>
-                        <div class="flex flex-col space-y-6 sm:flex-row sm:space-y-0 sm:space-x-4">
-                            <button class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg shadow-lg transition">Comprar Ahora</button>
-                            <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition">Añadir al Carrito</button>
-                        </div>
+                        <form action="{{ route('agregarAlCarrito', $producto['id']) }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="cantidad" class="text-gray-300 text-lg block mb-2">Cantidad:</label>
+                                <input type="number" id="cantidad" name="cantidad" min="1" value="1" class="bg-gray-700 text-white text-lg px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" />
+                            </div>
+                            <div class="flex flex-col space-y-6 sm:flex-row sm:space-y-0 sm:space-x-4">
+                                <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-lg shadow-lg transition">Añadir al Carrito</button>
+                                <a href="{{ route('carrito') }}" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition">Comprar Ahora</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
-    <footer class="bg-black text-white py-6">
-        <div class="text-center">
-            <h3 class="font-bold text-lg">Preventas Exclusivas</h3>
-            <p>DC Comics</p>
-            <p>Marvel Comics</p>
-            <p>Panini Comics</p>
-        </div>
-     </footer>
+        <footer class="bg-black text-white py-6">
+            <div class="text-center">
+                <h3 class="font-bold text-lg">Preventas Exclusivas</h3>
+                <p>DC Comics</p>
+                <p>Marvel Comics</p>
+                <p>Panini Comics</p>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

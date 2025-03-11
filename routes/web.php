@@ -17,6 +17,10 @@ Route::get('/tiendaCliente', function () {
 })->name('tiendaCliente');
 
 Route::get('/compraComic/{id}', [ComicController::class, 'show'])->name('compraComic');
+Route::post('/agregar-al-carrito/{id}', [ComicController::class, 'agregarAlCarrito'])->name('agregarAlCarrito');
+Route::get('/carrito', function () {
+    return view('carrito'); 
+})->name('carrito');
 
 Route::get('/mi-perfil', [MiPerfilController::class, 'index'])->name('miPerfil');
 
@@ -32,14 +36,9 @@ Route::get('/misPedidos', function () {
     return view('misPedidos');
 })->name('misPedidos');
 
-
-
-
 Route::get('/todos-productos', function () {
     return view('todosProductos');
 })->name('todosProductos');
-
-
 
 Route::get('/RegistroProductos', function () {
     return view('productosRegistro');
