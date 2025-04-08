@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Pow! Cómics - Producto</title>
+    <title>¡Pow! Cómics - Registro de Figura</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         * {
@@ -12,11 +12,9 @@
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
         }
-        
         body {
             background-color: #f8f8f8;
         }
-        
         .product-container {
             background-color: #777;
             position: relative;
@@ -24,15 +22,11 @@
             background-image: repeating-linear-gradient(45deg, #777, #777 20px, #666 20px, #666 40px);
             overflow: hidden;
         }
-        
         .burst {
             position: absolute;
-            width: 80px;
-            height: 80px;
             background-color: #00cc00;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         }
-        
         .product-card {
             display: flex;
             background-color: white;
@@ -43,7 +37,6 @@
             position: relative;
             z-index: 1;
         }
-        
         .product-image {
             flex: 1;
             padding: 30px;
@@ -51,55 +44,12 @@
             justify-content: center;
             align-items: center;
         }
-        
-        .product-image img {
-            max-width: 100%;
-            max-height: 400px;
-            object-fit: contain;
-        }
-        
         .product-details {
             flex: 1;
             padding: 30px;
             background-color: #222;
             color: white;
         }
-        
-        .product-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .product-price {
-            font-size: 42px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-        
-        .quantity-selector {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        
-        .add-to-cart {
-            width: 100%;
-            padding: 15px;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        
-        .add-to-cart:hover {
-            background-color: #333;
-        }
-        
         .product-description {
             background-color: white;
             padding: 20px;
@@ -107,138 +57,104 @@
             color: #333;
             margin-top: 20px;
         }
-        
-        .description-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            color: #333;
-            font-weight: bold;
-        }
-        
-        .description-content {
-            line-height: 1.6;
-        }
-        
         .description-row {
             display: flex;
             margin-bottom: 8px;
         }
-        
         .description-row span:first-child {
             font-weight: bold;
             width: 150px;
         }
-        
-        .bursts-container {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .quantity-selector {
             width: 100%;
-            height: 100%;
-            z-index: 0;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            color: black;
         }
-        
-        
     </style>
 </head>
-<body>
-<header class="bg-white p-4 shadow-sm">
-    <div class="container mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <div class="text-3xl font-bold">¡Pow! <span class="text-gray-600">Cómics</span></div>
-      </div>
-      <nav class="hidden md:flex space-x-6">
-          <a href="{{ route("todosProductos") }}">Productos</a>
-          <a href="{{ route("productosRegistro")}}">Registro de Producto</a>
-          <a href="{{ route("perfilAdmin")}}">Mi perfil</a>
-      </nav>
-      <div class="flex items-center">
-        <button class="p-2 rounded-full bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
-    
-    <div class="product-container">
-        <div class="bursts-container">
 
-        </div>
-        
+<!-- Navbar -->
+<nav class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
+    <div class="space-x-6">
+            <a href="{{ route('todosProductos') }}" class="hover:text-yellow-400">Productos</a>
+            <a href="{{ route('productosRegistro') }}" class="hover:text-yellow-400">Registro de Producto</a>
+            <a href="{{ route('proveedores.index') }}" class="hover:text-yellow-400">Proveedores</a>
+            <a href="{{ route('perfilAdmin') }}" class="hover:text-yellow-400">Mi perfil</a>
+    </div>
+</nav>
+
+<form action="{{ route('figuras.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="product-container">
         <div class="product-card">
             <div class="product-image">
-                <input type="file" id="imageUpload" accept="image/*" class="form-control">
-
+                <input type="file" id="imageUpload" name="imagen" accept="image/*" class="form-control">
             </div>
             <div class="product-details">
-                <input type="text" class="product-title-input" placeholder="Set de juego hasbro Marvel" style="width: 100%; font-size: 24px; margin-bottom: 20px; padding: 8px; border: 1px solid #555; background-color: #333; color: white;">
-                <div class="product-price-container" style="display: flex; align-items: center; margin-bottom: 30px;">
+                <input type="text" name="nombre" class="product-title-input" placeholder="Nombre del producto"
+                    style="width: 100%; font-size: 24px; margin-bottom: 20px; padding: 8px; border: 1px solid #555; background-color: #333; color: white;">
+
+                <div style="display: flex; align-items: center; margin-bottom: 30px;">
                     <span style="font-size: 30px; margin-right: 5px;">$</span>
-                    <input type="text" class="product-price-input" placeholder="1,393.00" style="width: 80%; font-size: 42px; font-weight: bold; padding: 5px; border: 1px solid #555; background-color: #333; color: white;">
+                    <input type="text" name="precio" class="product-price-input" placeholder="Precio"
+                        style="width: 80%; font-size: 42px; font-weight: bold; padding: 5px; border: 1px solid #555; background-color: #333; color: white;">
                 </div>
-                
-                <select class="quantity-selector">
-                    <option>Cantidad de Registro</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="30">30</option>
-                    <option value="35">35</option>
-                    <option value="40">40</option>
-                    <option value="45">45</option>
-                    <option value="50">50</option>
+
+                <select class="quantity-selector" name="stock_actual">
+                    <option disabled selected>Cantidad de Registro</option>
+                    @for($i = 1; $i <= 50; $i += ($i < 10 ? 1 : 5))
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
                 </select>
-                
-                <button class="add-to-cart">Añadir registro</button>
-                <button class="add-to-cart" style="background-color: #444; margin-top: 10px;">Guardar cambios</button>
-                
+
                 <div class="product-description">
-                    <div class="description-title">
-                        Descripción y especificaciones:
-                    </div>
+                    <div class="description-title font-bold mb-2">Descripción y especificaciones:</div>
                     <div class="description-content">
                         <div class="description-row">
-                            <span>Detalles del artículo:</span>
-                            <span><input type="text" placeholder="Set de figuras de acción" style="width: 100%; padding: 5px;"></span>
+                            <span>Descripción:</span>
+                            <input type="text" name="descripcion" placeholder="Set de figuras de acción"
+                                style="width: 100%; padding: 5px;">
                         </div>
                         <div class="description-row">
-                            <span>Tamaño:</span>
-                            <span><input type="text" placeholder="31.8 cm" style="width: 100%; padding: 5px;"></span>
+                            <span>SKU:</span>
+                            <input type="text" name="sku" placeholder="Código único"
+                                style="width: 100%; padding: 5px;">
                         </div>
                         <div class="description-row">
-                            <span>Material:</span>
-                            <span><input type="text" placeholder="Plástico" style="width: 100%; padding: 5px;"></span>
+                            <span>Editorial/Marca:</span>
+                            <input type="text" name="editorial_o_marca" placeholder="Hasbro, Bandai, etc."
+                                style="width: 100%; padding: 5px;">
                         </div>
                         <div class="description-row">
-                            <span>Peso:</span>
-                            <span><input type="text" placeholder="0.79" style="width: 100%; padding: 5px;"></span>
+                            <span>Fecha lanzamiento:</span>
+                            <input type="date" name="fecha_lanzamiento" style="width: 100%; padding: 5px;">
                         </div>
                         <div class="description-row">
-                            <span>Modelo:</span>
-                            <span><input type="text" placeholder="E4252" style="width: 100%; padding: 5px;"></span>
+                            <span>Proveedor:</span>
+                            <select name="id_proveedor" style="width: 100%; padding: 5px;">
+                                <option value="">Seleccionar proveedor</option>
+                                @foreach($proveedores as $proveedor)
+                                    <option value="{{ $proveedor->id_proveedor }}">{{ $proveedor->nombre }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
+
+                <button type="submit" class="add-to-cart"
+                    style="background-color:rgb(255, 238, 0); color: black; font-weight: bold; font-size: 16px; padding: 12px 20px; margin-top: 20px; border-radius: 8px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); display: block; width: 100%;">
+                    Guardar Figura
+                </button>
             </div>
         </div>
     </div>
-    
-    <footer class="bg-white py-4 border-t">
+</form>
+
+<footer class="bg-white py-4 border-t">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="flex space-x-4 mb-4 md:mb-0">
@@ -272,39 +188,19 @@
       </div>
     </div>
   </footer>
-    
-    <script>
-        const burstsContainer = document.querySelector('.bursts-container');
-        const numberOfBursts = 40;
-        
-        for (let i = 0; i < numberOfBursts; i++) {
-            const burst = document.createElement('div');
-            burst.className = 'burst';
-            
-            const posX = Math.random() * 100;
-            const posY = Math.random() * 100;
-            
-            const size = 30 + Math.random() * 60;
-            
-            burst.style.left = ${posX}%;
-            burst.style.top = ${posY}%;
-            burst.style.width = ${size}px;
-            burst.style.height = ${size}px;
-            
-            burstsContainer.appendChild(burst);
-        }
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('comicImage').src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    </script>
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+@endif
+
 </body>
 </html>

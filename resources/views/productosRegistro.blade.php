@@ -7,28 +7,16 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
-  <!-- Header -->
-  <header class="bg-white p-4 shadow-sm">
-    <div class="container mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <div class="text-3xl font-bold">¡Pow! <span class="text-gray-600">Cómics</span></div>
-      </div>
-      <nav class="hidden md:flex space-x-6">
-          <a href="{{ route("todosProductos") }}">Productos</a>
-          <a href="{{ route("productosRegistro")}}">Registro de Producto</a>
-          <a href="#">Mi perfil</a>
-      </nav>
-      <div class="flex items-center">
-        <button class="p-2 rounded-full bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </button>
-      </div>
+  <!-- Navbar -->
+<nav class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
+    <div class="space-x-6">
+            <a href="{{ route('todosProductos') }}" class="hover:text-yellow-400">Productos</a>
+            <a href="{{ route('productosRegistro') }}" class="hover:text-yellow-400">Registro de Producto</a>
+            <a href="{{ route('proveedores.index') }}" class="hover:text-yellow-400">Proveedores</a>
+            <a href="{{ route('perfilAdmin') }}" class="hover:text-yellow-400">Mi perfil</a>
     </div>
-  </header>
-
+</nav>
   
   <main class="flex-grow">
     <div class="container mx-auto p-4">
@@ -36,15 +24,15 @@
         <div class="absolute inset-0 overflow-hidden" style="background-image: url('/api/placeholder/1200/300'); background-size: cover; opacity: 0.3;"></div>
         <div class="absolute top-0 left-0 w-full h-full" id="burstsContainer"></div>
         <div class="flex justify-between items-center relative z-10">
-          <h1 class="text-4xl font-bold text-white">Mis Productos</h1>
+          <h1 class="text-4xl font-bold text-white">Registro de produtos</h1>
           
         </div>
       </div>
       <div class="flex justify-center space-x-4 mt-4">
-        <a class="bg-black text-white px-4 py-2 rounded" href="{{ route('comicsRegistro') }}">
+        <a class="bg-black text-white px-4 py-2 rounded" href="{{ route('figuras.create') }}">
             Registrar nueva figura
         </a>
-        <a class="bg-black text-white px-4 py-2 rounded" href="{{ route('figurasRegistro') }}">
+        <a class="bg-black text-white px-4 py-2 rounded" href="{{ route('comics.create') }}">
             Registrar nuevo cómic
         </a>
       </div>

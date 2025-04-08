@@ -30,13 +30,7 @@
                 <a href="{{ route('misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
                 <a href="{{ route('membresia') }}" class="text-white hover:text-yellow-400">Mi Membresía</a>
                 <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
-                <a href="{{ route('carrito') }}" class="text-white hover:text-yellow-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1.5 9H5.5L4 3z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4zm1-8h10M5 6h12" />
-                    </svg>
-                </a>
-                                
+
                 <div class="relative">
                     <input type="text" placeholder="Buscar..." class="px-4 py-2 rounded text-black">
                     <button class="absolute right-2 top-2 text-white">
@@ -47,6 +41,15 @@
                 </div>
             </div>
         </nav>
+
+        <div class="fixed bottom-5 right-5 bg-yellow-500 text-black p-4 rounded-lg shadow-xl z-50 max-w-xs animate-bounce">
+            <p class="font-semibold">¡Hola! 👋</p>
+            <p class="text-sm">¿Tienes dudas o sugerencias?</p>
+            <a href="{{ route('contacto.formulario') }}"
+            class="mt-2 inline-block bg-black text-white px-4 py-1 rounded hover:bg-gray-800 font-semibold text-sm">
+            Contáctanos
+            </a>
+        </div>
 
         <div class="relative z-10 flex flex-grow p-6 space-x-6">
             <aside class="w-64 bg-gray-800 p-6 rounded-lg shadow-lg hidden lg:block">

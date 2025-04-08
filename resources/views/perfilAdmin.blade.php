@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,18 +13,15 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
-        
         body {
             background-color: #f5f5f5;
         }
-        
         .profile-section {
             position: relative;
             padding: 40px 20px;
             background: #888;
             overflow: hidden;
         }
-        
         .profile-header {
             display: flex;
             justify-content: space-between;
@@ -32,14 +30,12 @@
             position: relative;
             z-index: 2;
         }
-        
         .profile-title {
             color: white;
             font-size: 32px;
             margin: 0;
             position: relative;
         }
-        
         .save-button {
             background-color: rgb(1, 195, 198);
             color: white;
@@ -52,11 +48,9 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: background-color 0.3s;
         }
-        
         .save-button:hover {
             background-color:rgb(1, 195, 198);
         }
-        
         .star-pattern {
             position: absolute;
             top: 0;
@@ -69,9 +63,6 @@
             z-index: 1;
             overflow: hidden;
         }
-        
-        
-        
         .profile-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -79,14 +70,12 @@
             position: relative;
             z-index: 2;
         }
-        
         .card {
             background-color: white;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        
         .card-title {
             display: flex;
             justify-content: space-between;
@@ -95,11 +84,9 @@
             font-weight: bold;
             color: #333;
         }
-        
         .card-content {
             color: #666;
         }
-        
         .text-input {
             width: 100%;
             padding: 8px 10px;
@@ -109,126 +96,105 @@
             color: #555;
             background-color: #f9f9f9;
         }
-        
-        .text-input:focus {
-            outline: none;
-            border-color: #00cc00;
-            box-shadow: 0 0 3px rgba(0, 204, 0, 0.3);
-        }
-        
         .text-input[readonly] {
             background-color: #f0f0f0;
             cursor: not-allowed;
         }
-        
-        .edit-icon {
-            cursor: pointer;
-        }
-        
     </style>
 </head>
 <body>
-<header class="bg-white p-4 shadow-sm">
-    <div class="container mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <div class="text-3xl font-bold">¡Pow! <span class="text-gray-600">Cómics</span></div>
-      </div>
-      <nav class="hidden md:flex space-x-6">
-          <a href="{{ route("todosProductos") }}">Productos</a>
-          <a href="{{ route("productosRegistro")}}">Registro de Producto</a>
-          <a href="{{ route("perfilAdmin")}}">Mi perfil</a>
-      </nav>
-      <div class="flex items-center">
-        <button class="p-2 rounded-full bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </button>
-      </div>
+<!-- Navbar -->
+<nav class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
+    <div class="space-x-6">
+            <a href="{{ route('todosProductos') }}" class="hover:text-yellow-400">Productos</a>
+            <a href="{{ route('productosRegistro') }}" class="hover:text-yellow-400">Registro de Producto</a>
+            <a href="{{ route('proveedores.index') }}" class="hover:text-yellow-400">Proveedores</a>
+            <a href="{{ route('perfilAdmin') }}" class="hover:text-yellow-400">Mi perfil</a>
     </div>
-  </header>
-    
-    <section class="profile-section">
-        <div class="star-pattern">
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
-        </div>
-        
+</nav>
+
+<section class="profile-section">
+    <div class="star-pattern"></div>
+    <form id="formPerfil" action="{{ route('adminPerfil.update', $perfil->id) }}" method="POST">
+        @csrf
+        @method('PUT')
         <div class="profile-header">
             <h1 class="profile-title">Mi perfil</h1>
-            <button class="save-button">Guardar datos</button>
+            <div class="space-x-4">
+                <button type="button" id="editBtn" class="save-button">Editar</button>
+                <button type="submit" id="saveBtn" class="save-button hidden">Guardar Cambios</button>
+            </div>
         </div>
-        
+
         <div class="profile-cards">
             <div class="card">
-                <div class="card-title">
-                    <span>Empresa</span>
-                    
-                </div>
+                <div class="card-title"><span>Empresa</span></div>
                 <div class="card-content">
-                    <input type="text" placeholder="Empresa 01" class="text-input">
+                    <input type="text" name="empresa" value="{{ $perfil->empresa }}" class="text-input" readonly>
                 </div>
             </div>
-            
+
             <div class="card">
-                <div class="card-title">
-                    <span>Encargado</span>
-                    
-                </div>
+                <div class="card-title"><span>Encargado</span></div>
                 <div class="card-content">
-                    
-                    <input type="text" placeholder="Rachel Zane" class="text-input">
+                    <input type="text" name="encargado" value="{{ $perfil->encargado }}" class="text-input" readonly>
                 </div>
             </div>
-            
+
             <div class="card">
-                <div class="card-title">
-                    <span>Correo</span>
-                    
-                </div>
+                <div class="card-title"><span>Correo</span></div>
                 <div class="card-content">
-                    <input type="email" placeholder="Usuario@gmail.com" class="text-input">
+                    <input type="email" name="correo" value="{{ $perfil->correo }}" class="text-input" readonly>
                 </div>
             </div>
-            
+
             <div class="card">
-                <div class="card-title">
-                    <span>Telefono y dirección</span>
-                </div>
+                <div class="card-title"><span>Teléfono y dirección</span></div>
                 <div class="card-content">
-                    <input type="tel" placeholder="442 999 9999" class="text-input">
-                    <input type="text" placeholder="Col. XX Calle: XXX No.XX" class="text-input" style="margin-top: 8px;">
+                    <input type="tel" name="telefono" value="{{ $perfil->telefono }}" class="text-input" readonly>
+                    <input type="text" name="direccion" value="{{ $perfil->direccion }}" class="text-input mt-2" readonly>
                 </div>
             </div>
-            
+
             <div class="card">
-                <div class="card-title">
-                    <span>Estatus</span>
-                </div>
+                <div class="card-title"><span>Estatus</span></div>
                 <div class="card-content">
-                    <input type="text" placeholder="Activo" class="text-input">
+                <select name="estatus" class="text-input" id="estatus" disabled>
+                    <option value="activo" {{ $perfil->estatus == 'activo' ? 'selected' : '' }}>Activo</option>
+                    <option value="inactivo" {{ $perfil->estatus == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                </select>
                 </div>
             </div>
-            
+
             <div class="card">
-                <div class="card-title">
-                    <span>Razón Social</span>
-                </div>
+                <div class="card-title"><span>Razón Social</span></div>
                 <div class="card-content">
-                    <input type="text" placeholder="Comics y Articulos S.A. de C.V." class="text-input">
+                    <input type="text" name="razon_social" value="{{ $perfil->razon_social }}" class="text-input" readonly>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <footer class="bg-white py-4 border-t">
+    </form>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editButton = document.getElementById('editBtn');
+        const saveButton = document.getElementById('saveBtn');
+        const inputs = document.querySelectorAll('.text-input');
+
+        editButton.addEventListener('click', function () {
+            inputs.forEach(input => {
+                input.removeAttribute('readonly');
+                input.removeAttribute('disabled'); 
+            });
+            saveButton.style.display = 'inline-block';
+        });
+    });
+</script>
+
+
+<footer class="bg-white py-4 border-t">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="flex space-x-4 mb-4 md:mb-0">

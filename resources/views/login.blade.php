@@ -25,7 +25,6 @@
                 background-size: auto;
                 background-repeat: repeat;
                 background-position: center;">
-
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
         
         <div class="relative text-center">
@@ -39,11 +38,15 @@
             <div class="bg-white text-black p-6 rounded-lg shadow-lg mt-4 w-80">
                 <form id="loginForm">
                     <label class="block text-left">Usuario</label>
-                    <input type="text" id="username" class="w-full p-2 border rounded mb-3" placeholder="Usuario">
+                    <input type="text" id="username" class="w-full p-2 border rounded mb-3" placeholder="Usuario" required>
+
+                    <label class="block text-left">Correo</label>
+                    <input type="email" id="email" class="w-full p-2 border rounded mb-3" placeholder="email@ejemplo.com" required>
+
                     <label class="block text-left">Contraseña</label>
-                    <input type="password" id="password" class="w-full p-2 border rounded mb-3" placeholder="*****">
-                    <a href="{{ route('register') }}" class="text-blue-500 text-sm block">¿No tienes sesión?</a>
-                    <a href="#" class="text-blue-500 text-sm block">¿Olvidaste tu contraseña?</a>
+                    <input type="password" id="password" class="w-full p-2 border rounded mb-3" placeholder="*****" required>
+
+                    <a href="{{ route('register') }}" class="text-blue-500 text-sm block">¿No tienes cuenta?</a>
                     <button type="submit" class="w-full bg-black text-white p-2 rounded mt-4">¡Vamos!</button>
                 </form>
             </div>
@@ -72,23 +75,35 @@
         document.addEventListener("DOMContentLoaded", function () {
             const errorMessage = document.getElementById("errorMessage");
 
-            document.getElementById("loginForm").addEventListener("submit", function (event) {
+            document.getElementById("loginForm").addEventListener("submit", async function (event) {
                 event.preventDefault(); 
 
-                const staticUser = "Pao";
-                const staticPassword = "12345";
-
-                const username = document.getElementById("username").value;
+                const name = document.getElementById("username").value;
+                const email = document.getElementById("email").value;
                 const password = document.getElementById("password").value;
 
-                if (username === staticUser && password === staticPassword) {
-                    window.location.href = "{{ route('tiendaCliente') }}"; 
-                } else {
-                  
+                try {
+                    const response = await fetch("http://127.0.0.1:8001/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.detail || "Credenciales incorrectas");
+                    }
+
+                    localStorage.setItem("token", data.token);
+                    window.location.href = "/tiendaCliente";
+
+                } catch (error) {
+                    errorMessage.textContent = error.message;
                     errorMessage.classList.remove("hidden");
                     setTimeout(() => {
                         errorMessage.classList.add("hidden");
-                    }, 3000); 
+                    }, 3000);
                 }
             });
         });

@@ -14,7 +14,7 @@
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
 
     <div class="relative flex flex-col flex-grow" 
-         style="background-image: url('Fondo 1.png'); 
+        style="background-image: url('Fondo 1.png'); 
                 background-size: auto;
                 background-repeat: repeat;
                 background-position: center;">
@@ -30,13 +30,7 @@
                 <a href="{{ route('misCompras') }}" class="text-white hover:text-yellow-400">Mis Compras</a>
                 <a href="{{ route('membresia') }}" class="text-white hover:text-yellow-400">Mi Membresía</a>
                 <a href="{{ route('miPerfil') }}" class="text-white hover:text-yellow-400">Mi perfil</a>
-                <a href="{{ route('carrito') }}" class="text-white hover:text-yellow-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1.5 9H5.5L4 3z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4zm1-8h10M5 6h12" />
-                    </svg>
-                </a>
-                
+
                 <div class="relative">
                     <input type="text" placeholder="Buscar..." class="px-4 py-2 rounded text-black">
                     <button class="absolute right-2 top-2 text-white">
@@ -59,7 +53,12 @@
                         <h3 class="font-bold text-lg">Star Wars: High Republic Shadow Of Starlight</h3>
                         <p class="text-gray-700 text-lg">Dirección: Col. XXXX  Calle: XX, No:XX</p>
                         <p class="text-gray-500">Fecha estimada de entrega: XX/XX/XXXX</p>
-                        <p class="text-gray-500">Rastrear desde paquetería: <a href="#" class="text-yellow-400 underline">Rastrear</a></p>
+                        <p class="text-gray-500">
+                            Rastrear desde paquetería: 
+                            <a href="https://www.dhl.com/mx-es/home/rastreo.html" 
+                               target="_blank" 
+                               class="text-yellow-400 underline">Rastrear</a>
+                        </p>
                     </div>
                 </div>
 
@@ -72,7 +71,12 @@
                         <h3 class="font-bold text-lg">The Ultimate Spider-Man #04</h3>
                         <p class="text-gray-700 text-lg">Dirección: Col. XXXX  Calle: XX, No:XX</p>
                         <p class="text-gray-500">Fecha estimada de entrega: XX/XX/XXXX</p>
-                        <p class="text-gray-500">Rastrear desde paquetería: <a href="#" class="text-yellow-400 underline">Rastrear</a></p>
+                        <p class="text-gray-500">
+                            Rastrear desde paquetería: 
+                            <a href="https://www.dhl.com/mx-es/home/rastreo.html" 
+                               target="_blank" 
+                               class="text-yellow-400 underline">Rastrear</a>
+                        </p>
                     </div>
                 </div>
 
@@ -85,7 +89,10 @@
                         <h3 class="font-bold text-lg">Justice League By Geoff Johns 1 (DC Omnibus)</h3>
                         <p class="text-gray-700 text-lg">Dirección: Col. XXXX  Calle: XX, No:XX</p>
                         <p class="text-gray-500">Fecha estimada de entrega: XX/XX/XXXX</p>
-                        <p class="text-gray-500">Rastrear desde paquetería: <a href="#" class="text-yellow-400 underline">Rastrear</a></p>
+                        <p class="text-gray-500">
+                            Rastrear desde paquetería: 
+                            <span class="text-gray-400">No disponible</span>
+                        </p>
                     </div>
                 </div>
             </main>

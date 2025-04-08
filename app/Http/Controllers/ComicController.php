@@ -3,57 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
+use App\Models\Producto;
+use App\Models\Proveedor;
 
 class ComicController extends Controller
 {
     protected $productos = [
         1 => [
-            'nombre' => 'Deadpool Vol.05',
-            'precio' => '$299.00',
-            'descripcion' => 'Es insoportable, peligroso y... huele fatal. Pero al público le encanta. 
-            Sin embargo, la fama no viene sola, y ahora Deadpool debe lidiar con las responsabilidades que trae la popularidad. 
-            Para ello, decide pedir ayuda, pero... nunca adivinarás a quién se la pidió. 
-            Si eso no fuera suficiente, un impostor amenaza con destruir la reputación de Wade, y nuestro peculiar héroe tiene un plan maestro: 
-            ¡usar a su hija Ellie como cebo para atrapar al culpable! Y, además, por si eso no fuera poco,',
-            'imagen' => 'Deadpool Vol.05.jpg',
+            'titulo' => 'Deadpool Vol.05',
+            'precio' => 299.00,
+            'descripcion' => 'Es insoportable, peligroso y... huele fatal. Pero al público le encanta...',
+            'imagen' => 'DeadpoolVol5.jpg',
         ],
         2 => [
-            'nombre' => 'Incredible Hulk Vol.01',
-            'precio' => '$399.00',
-            'descripcion' => 'Mientras un enfurecido Hulk intenta tomar el control permanente del cuerpo que comparte con Bruce Banner, 
-            un misterioso inmortal pone a todos los monstruos de la Tierra en su contra en un intento por liberar a su creadora, 
-            la primordial Madre de los Horrores. Con ayuda de una nueva e insólita amistad, Banner debe impedir que el mundo se sumerja en la oscuridad.',
-            'imagen' => 'Incredible Hulk Vol.01.jpg',
+            'titulo' => 'Incredible Hulk Vol.01',
+            'precio' => 399.00,
+            'descripcion' => 'Mientras un enfurecido Hulk intenta tomar el control permanente...',
+            'imagen' => 'HulkVol1.jpg',
         ],
         3 => [
-            'nombre' => 'Star Wars De Gillen & Pak',
-            'precio' => '$1,533.00',
-            'descripcion' => 'Con la tensión en aumento en la Galaxia, la Princesa Leia, Luke Skywalker y sus aliados buscan una nueva base para la Alianza Rebelde,
-            lo que los lleva a las ruinas de Jedha, la luna devastada por la Estrella de la Muerte, el planeta minero Shu-Torun, ¡y hasta el mundo cubierto en agua de Mon Cala!',
-            'imagen' => 'Star Wars De Gillen & Pak.jpeg',
+            'titulo' => 'Star Wars De Gillen & Pak',
+            'precio' => 1533.00,
+            'descripcion' => 'Con la tensión en aumento en la Galaxia, la Princesa Leia, Luke Skywalker y sus aliados...',
+            'imagen' => 'StarWarsGillenPak.jpg',
         ],
         4 => [
-            'nombre' => 'The Amazing Spider-Man #25',
-            'precio' => '$79.00',
-            'descripcion' => 'Este número marca el inicio de una etapa crucial en Amazing Spider-Man que no querrás perderte. Peter Parker se adentra en su lado más oscuro, 
-            y las consecuencias comienzan a desenredarse.',
+            'titulo' => 'The Amazing Spider-Man #25',
+            'precio' => 79.00,
+            'descripcion' => 'Este número marca el inicio de una etapa crucial en Amazing Spider-Man. Peter Parker...',
             'imagen' => 'The Amazing Spider-Man.jpeg',
         ],
         5 => [
-            'nombre' => 'Punisher De Mike Baron',
-            'precio' => '$579.00',
-            'descripcion' => 'La cruzada de Punisher contra el crimen lo lleva cara a cara con un cartel de la droga boliviano, y para Frank Castle, 
-            su viaje a Sudamérica no será precisamente una visita de placer.',
+            'titulo' => 'Punisher De Mike Baron',
+            'precio' => 579.00,
+            'descripcion' => 'La cruzada de Punisher contra el crimen lo lleva cara a cara con un cartel de la droga boliviano.',
             'imagen' => 'Punisher De Mike Baron.jpeg',
         ],
         6 => [
-            'nombre' => 'Daredevil Vol.01',
-            'precio' => '$1,235.00',
-            'descripcion' => 'Es una nueva era para Nueva York y para el Hombre Sin Miedo. Matt Murdock no tiene más opción que dejar atrás todo lo que ha conocido, 
-            y Elektra es el último vestigio de su vida pasada. Todo lo que Matt creía saber sobre lo que significa ser Daredevil está a punto de cambiar.',
+            'titulo' => 'Daredevil Vol.01',
+            'precio' => 1235.00,
+            'descripcion' => 'Es una nueva era para Nueva York y para el Hombre Sin Miedo...',
             'imagen' => 'Daredevil Vol.01.jpeg',
-        ]
+        ],
     ];
 
     public function show($id)
@@ -63,28 +55,70 @@ class ComicController extends Controller
         }
 
         $producto = $this->productos[$id];
-        $producto['id'] = $id; 
+        $producto['id'] = $id;
+
         return view('compraComic', compact('producto'));
     }
 
-    public function agregarAlCarrito(Request $request, $id)
+    public function pagarConPaypal($id)
     {
-        $request->validate([
-            'cantidad' => 'required|integer|min:1',
-        ]);
-
         if (!isset($this->productos[$id])) {
             abort(404);
         }
 
         $producto = $this->productos[$id];
-        $producto['id'] = $id; 
-        $producto['cantidad'] = $request->cantidad;
+        $producto['id'] = $id;
 
-        $carrito = Session::get('carrito', []);
-        $carrito[$id] = $producto; 
-        Session::put('carrito', $carrito);
+        $response = Http::post(route('paypal.createOrder'), [
+            'price' => $producto['precio'],
+            'currency' => 'MXN', 
+        ]);
 
-        return redirect()->route('carrito')->with('success', 'Producto agregado al carrito');
+        if ($response->ok()) {
+            $approvalUrl = $response->json()['approval_url'];
+            return redirect()->away($approvalUrl); 
+        } else {
+            return redirect()->route('comic.show', $id)->with('error', 'Hubo un problema al procesar el pago');
+        }
+    }
+
+    public function create()
+    {
+        $proveedores = Proveedor::all();
+        return view('comicsRegistro', compact('proveedores'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'precio' => 'required|numeric',
+            'stock_actual' => 'required|integer|min:1|max:100',
+            'imagen' => 'nullable|image|max:2048',
+            'descripcion' => 'nullable|string',
+            'editorial_o_marca' => 'nullable|string|max:100',
+            'fecha_lanzamiento' => 'nullable|date',
+            'sku' => 'nullable|string|max:100|unique:productos,sku',
+            'id_proveedor' => 'nullable|exists:proveedores,id_proveedor'
+        ]);
+
+        $rutaImagen = null;
+        if ($request->hasFile('imagen')) {
+            $rutaImagen = $request->file('imagen')->store('productos', 'public');
+        }
+
+        Producto::create([
+            'nombre' => $request->nombre,
+            'precio' => $request->precio,
+            'stock_actual' => $request->stock_actual,
+            'imagen_url' => $rutaImagen,
+            'descripcion' => $request->descripcion,
+            'editorial_o_marca' => $request->editorial_o_marca,
+            'fecha_lanzamiento' => $request->fecha_lanzamiento,
+            'sku' => $request->sku,
+            'id_proveedor' => $request->id_proveedor
+        ]);
+
+        return redirect()->route('comicsRegistro')->with('success', 'Cómic guardado correctamente.');
     }
 }

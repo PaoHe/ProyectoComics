@@ -1,54 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¡Pow! Cómics - Producto</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pow! Cómics - Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
-  <header class="bg-white p-4 shadow-sm">
-    <div class="container mx-auto flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <div class="text-3xl font-bold">¡Pow! <span class="text-gray-600">Cómics</span></div>
-      </div>
-      <nav class="hidden md:flex space-x-6">
-          <a href="{{ route("todosProductos") }}">Productos</a>
-          <a href="{{ route("productosRegistro")}}">Registro de Producto</a>
-          <a href="{{ route("perfilAdmin")}}">Mi perfil</a>
-      </nav>
-      <div class="flex items-center">
-        <button class="p-2 rounded-full bg-gray-100">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </button>
-      </div>
+<!-- Navbar -->
+<nav class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
+    <div class="space-x-6">
+            <a href="{{ route('todosProductos') }}" class="hover:text-yellow-400">Productos</a>
+            <a href="{{ route('productosRegistro') }}" class="hover:text-yellow-400">Registro de Producto</a>
+            <a href="{{ route('proveedores.index') }}" class="hover:text-yellow-400">Proveedores</a>
+            <a href="{{ route('perfilAdmin') }}" class="hover:text-yellow-400">Mi perfil</a>
     </div>
-  </header>
-
-  
-  <main class="flex-grow">
+</nav>
+<main class="flex-grow">
     <div class="container mx-auto p-4">
-      <div class="relative bg-gray-400 rounded-lg p-8 mb-8">
-        <div class="absolute inset-0 overflow-hidden" style="background-image: url('/api/placeholder/1200/300'); background-size: cover; opacity: 0.3;"></div>
-        <div class="absolute top-0 left-0 w-full h-full" id="burstsContainer"></div>
-        <div class="flex justify-between items-center relative z-10">
-          <h1 class="text-4xl font-bold text-white">Mis Productos</h1>
-          <a id="addProductButton" class="bg-black text-white px-4 py-2 rounded" href="{{ route('productosRegistro') }}">
-          Agregar Producto
-          </a>
+        <div class="relative bg-gray-400 rounded-lg p-8 mb-8">
+            <div class="absolute inset-0 overflow-hidden" style="background-image: url('/api/placeholder/1200/300'); background-size: cover; opacity: 0.3;"></div>
+            <div class="absolute top-0 left-0 w-full h-full" id="burstsContainer"></div>
+            <div class="flex justify-between items-center relative z-10">
+                <h1 class="text-4xl font-bold text-white">Mis Productos</h1>
+                <a id="addProductButton" class="bg-black text-white px-4 py-2 rounded" href="{{ route('productosRegistro') }}">
+                    Agregar Producto
+                </a>
+            </div>
         </div>
-      </div>
 
-      
-      <div class="space-y-4" id="productList"></div>
+        <div class="space-y-6 pb-16">
+        @if ($productos->count() > 0)
+            <!-- Fragmento dentro del foreach de productos -->
+            @foreach($productos as $producto)
+        <div class="bg-white rounded-lg shadow-md overflow-hidden flex items-center p-4 
+            {{ $producto->stock_actual < 3 ? 'border-2 border-red-500' : '' }}">
+          <img src="{{ asset('storage/' . $producto->imagen_url) }}" alt="{{ $producto->nombre }}"
+              class="w-28 h-40 object-cover rounded border border-gray-300">
+          <div class="ml-6">
+            <h2 class="text-2xl font-bold text-gray-800">{{ $producto->nombre }}</h2>
+            <p class="text-gray-600 mt-1">${{ number_format($producto->precio, 2) }} MXN</p>
+            
+            <p class="text-sm mt-2 text-gray-700">Descripción: {{ $producto->descripcion ?? 'Sin descripción.' }}</p>
+            <p class="text-sm mt-1 text-gray-500">SKU: {{ $producto->sku ?? 'N/A' }}</p>
+            <p class="text-sm mt-1 text-gray-500">Editorial/Marca: {{ $producto->editorial_o_marca ?? 'N/A' }}</p>
+            <p class="text-sm mt-1 text-gray-500">Fecha lanzamiento: {{ $producto->fecha_lanzamiento ?? 'N/A' }}</p>
+
+            <p class="mt-3 text-sm text-gray-500">
+                Stock disponible: 
+                <span class="font-bold
+                    @if($producto->stock_actual < 3)
+                        text-red-500
+                    @elseif($producto->stock_actual <= 5)
+                        text-yellow-500
+                    @else
+                        text-green-600
+                    @endif
+                ">
+                    {{ $producto->stock_actual }} unidades
+                </span>
+            </p>
+
+            <div class="flex space-x-2 mt-4">
+              <a href="{{ route('productos.edit', $producto->id_producto) }}" 
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Editar
+              </a>
+
+              <form action="{{ route('productos.destroy', $producto->id_producto) }}" method="POST"
+                    onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                  Eliminar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        @endforeach
+        @else
+            <div class="bg-white rounded-lg shadow-md p-4 text-center">
+                <p class="text-gray-500">No hay productos registrados.</p>
+            </div>
+        @endif
+
+        </div>
+        <!-- Paginación -->
+        <div class="mt-8 flex justify-center">
+            {{ $productos->links('pagination::tailwind') }}
+        </div>
+
+        
     </div>
-  </main>
+</main>
 
-  
-  <footer class="bg-white py-4 border-t">
+<footer class="bg-white py-4 border-t">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="flex space-x-4 mb-4 md:mb-0">
@@ -83,125 +131,44 @@
     </div>
   </footer>
 
-  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: '{{ session('success') }}',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+@endif
+
+@if ($errors->any())
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error al guardar',
+        html: `{!! implode('<br>', $errors->all()) !!}`,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Revisar'
+    });
+</script>
+@endif
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if($productos->where('stock_actual', '<', 5)->count() > 0)
   <script>
-    
-    let products = [
-      {
-        id: 1,
-        name: "The Amazing Spider-Man #25",
-        price: 79.00,
-        currency: "MXN",
-        image: "/api/placeholder/120/180",
-        stock: 5,
-        
-      },
-      {
-        id: 2,
-        name: "X-Men Vol.46",
-        price: 149.00,
-        currency: "MXN",
-        image: "/api/placeholder/120/180",
-        stock: 3,
-        
-      },
-      {
-        id: 3,
-        name: "Daredevil Vol.01",
-        price: 169.00,
-        currency: "MXN",
-        image: "/api/placeholder/120/180",
-        stock: 7,
-        
-      }
-    ];
-
-    function renderProducts() {
-      const productList = document.getElementById('productList');
-      productList.innerHTML = ''; 
-
-      products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.className = 'bg-white rounded-lg shadow-md overflow-hidden';
-
-        productDiv.innerHTML = `
-          <div class="p-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-              <img src="${product.image}" alt="${product.name}" class="w-20 h-28 object-cover rounded" />
-              <div>
-                <h3 class="text-lg font-semibold">${product.name}</h3>
-                <p class="text-gray-600">$${product.price.toFixed(2)} ${product.currency}</p>
-                <div class="mt-2 text-sm text-gray-500">
-                  Stock disponible: <span class="${product.stock < 3 ? 'text-red-500 font-bold' : 'text-green-600 font-bold'}">${product.stock} unidades</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center space-x-4">
-              
-              <button class="bg-gray-200 hover:bg-gray-300 p-2 rounded-full" onclick="handleDelete(${product.id})">
-                <!-- Ícono Trash -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a2 2 0 012 2v2H8V5a2 2 0 012-2z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          ${product.quantity > 0 ? `
-            <div class="bg-gray-100 p-3 text-right">
-              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm">
-                Agregar
-              </button>
-            </div>
-          ` : ''}
-        `;
-        productList.appendChild(productDiv);
-      });
-    }
-
-    
-    function handleDelete(id) {
-      if (confirm("Si eliminas este producto se perdera ¿estas seguro?")) {
-        products = products.filter(product => product.id !== id);
-        renderProducts();
-      }
-    }
-
-    function handleQuantityChange(id, newQuantity) {
-      products = products.map(product => {
-        if (product.id === id) {
-          return {
-            ...product,
-            quantity: Math.max(0, Math.min(newQuantity, product.stock))
-          };
-        }
-        return product;
-      });
-      renderProducts();
-    }
-
-    function renderBursts() {
-      const burstsContainer = document.getElementById('burstsContainer');
-      burstsContainer.innerHTML = '';
-      for (let i = 0; i < 20; i++) {
-        const burst = document.createElement('div');
-        burst.className = 'absolute';
-        const posX = Math.random() * 100;
-        const posY = Math.random() * 100;
-        burst.style.top = posY + '%';
-        burst.style.left = posX + '%';
-        burst.style.width = '40px';
-        burst.style.height = '40px';
-        burst.style.background = '#00CC00';
-        burst.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
-        burst.style.zIndex = '0';
-        burstsContainer.appendChild(burst);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      renderProducts();
-      renderBursts();
+    Swal.fire({
+      icon: 'warning',
+      title: '¡Atención!',
+      text: 'Algunos productos tienen stock bajo. Considera reabastecer.',
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Entendido'
     });
   </script>
+@endif
 </body>
 </html>
