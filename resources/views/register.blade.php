@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Pow! Cómics - Regístrate</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         .text-shadow {
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
@@ -17,7 +16,9 @@
     <nav class="bg-black p-4 flex justify-between items-center">
         <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow!</span> Cómics</div>
         <div>
-            <a href="{{ route('loginAdmin') }}"><button class="bg-gray-300 text-black px-4 py-2 rounded">Administrador</button></a>        
+            <a href="{{ route('loginAdmin') }}">
+                <button class="bg-gray-300 text-black px-4 py-2 rounded">Administrador</button>
+            </a>        
             <button onclick="window.location.href='{{ route('login') }}'" class="bg-black border border-white px-4 py-2 rounded ml-2">
                 Inicia sesión
             </button>      
@@ -26,7 +27,7 @@
 
     <main class="flex-grow flex justify-center items-center relative">
         <div class="absolute inset-0" 
-        style="background-image: url('{{ asset('Fondo 1.png') }}'); 
+            style="background-image: url('{{ asset('Fondo 1.png') }}'); 
             background-size: auto;
             background-repeat: repeat;
             background-position: center;">
@@ -40,18 +41,20 @@
             <div class="bg-white text-black p-6 rounded-lg shadow-lg mt-4 w-80">
                 <form id="registerForm">
                     <label class="block text-left">Nombre</label>
-                    <input type="text" id="name" class="w-full p-2 border rounded mb-3" placeholder="Nombre" required>
-
-                    <label class="block text-left">Contraseña</label>
-                    <input type="password" id="password" class="w-full p-2 border rounded mb-3" placeholder="******" required>
+                    <input type="text" id="nombre" class="w-full p-2 border rounded mb-3" placeholder="Nombre" required>
 
                     <label class="block text-left">Correo</label>
-                    <input type="email" id="email" class="w-full p-2 border rounded mb-3" placeholder="ejemplo@gmail.com" required>
+                    <input type="email" id="correo" class="w-full p-2 border rounded mb-3" placeholder="ejemplo@gmail.com" required>
+
+                    <label class="block text-left">Contraseña</label>
+                    <input type="password" id="contraseña" class="w-full p-2 border rounded mb-3" placeholder="******" required>
+
+                    <input type="hidden" id="tipo_usuario" value="cliente">
 
                     <button type="submit" class="w-full bg-black text-white p-2 rounded mt-4">Registrarme</button>
                 </form>
-                <p class="text-red-500 text-center" id="errorMsg"></p>
-                <p class="text-green-500 text-center" id="successMsg"></p>
+                <p class="text-red-500 text-center mt-2" id="errorMsg"></p>
+                <p class="text-green-500 text-center mt-2" id="successMsg"></p>
             </div>
         </div>
     </main>
@@ -78,14 +81,15 @@
         document.getElementById("registerForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const nombre = document.getElementById("nombre").value;
+            const correo = document.getElementById("correo").value;
+            const contraseña = document.getElementById("contraseña").value;
+            const tipo_usuario = document.getElementById("tipo_usuario").value;
 
-            const userData = { name, email, password };
+            const userData = { nombre, correo, contraseña, tipo_usuario };
 
             try {
-                const response = await fetch("http://127.0.0.1:8001/usuario", {
+                const response = await fetch("http://127.0.0.1:8001/usuarios", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -99,9 +103,7 @@
                     document.getElementById("successMsg").textContent = "¡Registro exitoso!";
                     document.getElementById("errorMsg").textContent = "";
                     document.getElementById("registerForm").reset();
-                    setTimeout(() => {
-                        window.location.href = "/login"; 
-                    }, 2000);
+                    // Sin redirección
                 } else {
                     document.getElementById("errorMsg").textContent = data.message || "Error en el registro.";
                     document.getElementById("successMsg").textContent = "";
@@ -112,6 +114,5 @@
             }
         });
     </script>
-
 </body>
 </html>

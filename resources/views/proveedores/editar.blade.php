@@ -9,15 +9,14 @@
 
 <!-- Navbar -->
 <nav class="bg-black text-white p-4 flex justify-between items-center">
-    <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
-    <div class="space-x-6">
+        <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
+        <div class="space-x-6">
             <a href="{{ route('todosProductos') }}" class="hover:text-yellow-400">Productos</a>
             <a href="{{ route('productosRegistro') }}" class="hover:text-yellow-400">Registro de Producto</a>
             <a href="{{ route('proveedores.index') }}" class="hover:text-yellow-400">Proveedores</a>
             <a href="{{ route('perfilAdmin') }}" class="hover:text-yellow-400">Mi perfil</a>
-
-    </div>
-</nav>
+        </div>
+    </nav>
 
 <div class="container mx-auto p-8">
     <h1 class="text-3xl font-bold mb-6">Editar Proveedor</h1>
@@ -32,7 +31,8 @@
         </div>
     @endif
 
-    <form action="{{ route('proveedores.update', $proveedor->id) }}" method="POST" class="space-y-4 bg-white p-6 rounded shadow">
+    <form action="{{ route('proveedores.update', $proveedor->id_proveedor) }}" method="POST">
+
         @csrf
         @method('PUT')
 

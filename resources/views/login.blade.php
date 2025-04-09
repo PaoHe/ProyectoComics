@@ -15,8 +15,10 @@
     <nav class="bg-black p-4 flex justify-between items-center">
         <div class="text-2xl font-bold">¡<span class="text-yellow-400">Pow</span>! Cómics</div>
         <div>
-            <a href="{{ route(name: 'register') }}" class="bg-black border border-white px-4 py-2 rounded ml-2">Regístrate</a>
-            <a href="{{ route('loginAdmin') }}"><button class="bg-gray-300 text-black px-4 py-2 rounded">Administrador</button></a>        
+            <a href="{{ route('register') }}" class="bg-black border border-white px-4 py-2 rounded ml-2">Regístrate</a>
+            <a href="{{ route('loginAdmin') }}">
+                <button class="bg-gray-300 text-black px-4 py-2 rounded">Administrador</button>
+            </a>        
         </div>
     </nav>
     
@@ -38,13 +40,10 @@
             <div class="bg-white text-black p-6 rounded-lg shadow-lg mt-4 w-80">
                 <form id="loginForm">
                     <label class="block text-left">Usuario</label>
-                    <input type="text" id="username" class="w-full p-2 border rounded mb-3" placeholder="Usuario" required>
-
-                    <label class="block text-left">Correo</label>
-                    <input type="email" id="email" class="w-full p-2 border rounded mb-3" placeholder="email@ejemplo.com" required>
+                    <input type="text" id="nombre" class="w-full p-2 border rounded mb-3" placeholder="Usuario" required>
 
                     <label class="block text-left">Contraseña</label>
-                    <input type="password" id="password" class="w-full p-2 border rounded mb-3" placeholder="*****" required>
+                    <input type="password" id="contraseña" class="w-full p-2 border rounded mb-3" placeholder="******" required>
 
                     <a href="{{ route('register') }}" class="text-blue-500 text-sm block">¿No tienes cuenta?</a>
                     <button type="submit" class="w-full bg-black text-white p-2 rounded mt-4">¡Vamos!</button>
@@ -78,26 +77,24 @@
             document.getElementById("loginForm").addEventListener("submit", async function (event) {
                 event.preventDefault(); 
 
-                const name = document.getElementById("username").value;
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
+                const nombre = document.getElementById("nombre").value;
+                const contraseña = document.getElementById("contraseña").value;
 
                 try {
                     const response = await fetch("http://127.0.0.1:8001/login", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ name, email, password })
+                        body: JSON.stringify({ nombre, contraseña })
                     });
 
                     const data = await response.json();
 
                     if (!response.ok) {
-                        throw new Error(data.detail || "Credenciales incorrectas");
+                        throw new Error(data.detail || data.message || "Credenciales incorrectas");
                     }
 
                     localStorage.setItem("token", data.token);
-                    window.location.href = "/tiendaCliente";
-
+                    window.location.href = "/tiendaCliente"; // Redirige a la tienda o dashboard
                 } catch (error) {
                     errorMessage.textContent = error.message;
                     errorMessage.classList.remove("hidden");
